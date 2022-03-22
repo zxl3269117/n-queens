@@ -79,12 +79,33 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var count = 0;
+      var rowArr = this.get(rowIndex);
+      for (var i = 0; i < rowArr.length; i++) {
+        if (rowArr[i]) {
+          count ++;
+        }
+      }
+      if (count > 1) {
+
+        return true;
+      }
+
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var i = 0;
+      while (this.get(i)) {
+        if (this.hasRowConflictAt(i)) {
+
+          return true;
+        }
+        i++;
+      }
+
+      return false;
     },
 
 
@@ -94,11 +115,36 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      //declare count variable equals to 0
+      var count = 0;
+      //iterate through all the rows on the board
+      var i = 0;
+      while (this.get(i)) {
+        if (this.get(i)[colIndex]) {
+          count++;
+        }
+        i++;
+      }
+
+      if (count > 1) {
+        return true;
+      }
+        //check if current row at colIndex has a truthy value
+          //increase count by 1
+      //check if count is greater than 1
+        //return true
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      // use get function to get the row array
+      // and get the length of the row array to obtain how many cols there're
+      //
+
+      // while the row exists
+        // if the result of invoking the hasColConflictAt on the first index of that row is TRUE
+          // return true
       return false; // fixme
     },
 
