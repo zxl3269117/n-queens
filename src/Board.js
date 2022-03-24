@@ -222,7 +222,7 @@
           colIndex = minorDiagonalColumnIndexAtFirstRow;
         }
       }
-      return false; // fixme
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
@@ -233,7 +233,7 @@
           return true;
         }
       }
-      return false; // fixme
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
