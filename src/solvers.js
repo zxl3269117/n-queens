@@ -16,15 +16,75 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = new Board({n: n});
 
+  var rowIndex = 0;
+  var colIndex = 0;
+  while (solution.get(rowIndex) !== undefined && solution.get(rowIndex)[colIndex] !== undefined) {
+    solution.togglePiece(rowIndex, colIndex);
+    rowIndex ++;
+    colIndex ++;
+  }
+
+  solution = solution.rows();
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var board = new Board ({n: n});
+  var solutionCount = 0; //fixme
+  //Declare a variable rowIndex = 0
+  var rowIndex = 0;
+  //Declare a colSize = n
+  var colSize = n;
+
+  //Declare innerFunc that takes in a variable nRooks //nRooks = 4, 3, 2, 1, 0
+  var innerFunc = function(nRooks) {
+    //Base case:
+    //There is no rook left to be placed on the board
+    if (nRooks === 0) {
+      //solutionCount + 1
+      //rowIndex - 1
+      //return
+      solutionCount ++;
+      rowIndex --;
+      return;
+    }
+
+    //Recursive case:
+    //When there's still rooks left to be placed
+    if (nRooks > 0) {
+      //Iterate from col from 0 to colSize - 1
+      for (var i = 0; i < colSize; i++) {
+        //Place the rook at the current row and col
+        board.togglePiece(rowIndex, i);
+
+        //if there's not a rook conflict by row or col
+        if (!board.hasAnyRooksConflicts()) {
+          //increase rowIndex by 1
+          rowIndex++;
+          //call the innerFunc with nRooks - 1
+          innerFunc(nRooks - 1);
+          board.togglePiece(rowIndex, i);
+        } else {
+          //if there's a rook conflict (column or row)
+          //remove rook from current place
+          board.togglePiece(rowIndex, i);
+        }
+      }
+    }
+
+    //rowIndex - 1
+    rowIndex --;
+    //return
+    return;
+  };
+
+  //invoke innerFunc with n
+  // debugger;
+  innerFunc(n);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
