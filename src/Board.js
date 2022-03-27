@@ -78,6 +78,7 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    // time complexity: O(n)
     hasRowConflictAt: function(rowIndex) {
       var count = 0;
       var rowArr = this.get(rowIndex);
@@ -95,25 +96,24 @@
     },
 
     // test if any rows on this board contain conflicts
+    // time complexity: O(n^2)
     hasAnyRowConflicts: function() {
       var i = 0;
       while (this.get(i)) {
         if (this.hasRowConflictAt(i)) {
-
           return true;
         }
         i++;
       }
-
       return false;
     },
-
 
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
+    // time complexity: O(n)
     hasColConflictAt: function(colIndex) {
       var count = 0;
       var i = 0;
@@ -131,6 +131,7 @@
     },
 
     // test if any columns on this board contain conflicts
+    // time complexity: O(n^2)
     hasAnyColConflicts: function() {
       var rowArr = this.get(0);
       if (rowArr === undefined) {
@@ -153,6 +154,7 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
+    // time complexity: O(n^2)
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       if (this.rows().length === 0) {
         return false;
@@ -162,21 +164,18 @@
       var colIndex = majorDiagonalColumnIndexAtFirstRow;
       var count = 0;
       var storage = rowIndex;
-      var boardSize = this.get(0).length;
+      var boardSize = this.get('n');
       while (this.get(rowIndex)) {
         while (colIndex < boardSize && rowIndex < boardSize) {
-
           if (this.get(rowIndex)[colIndex]) {
             count++;
           }
-
           rowIndex++;
           colIndex++;
         }
         if (count > 1) {
           return true;
         }
-
         colIndex = majorDiagonalColumnIndexAtFirstRow;
         storage++;
         rowIndex = storage;
@@ -186,6 +185,7 @@
     },
 
     // test if any major diagonals on this board contain conflicts
+    // time complexity: O(n^3)
     hasAnyMajorDiagonalConflicts: function() {
       if (this.rows().length === 0) {
         return false;
@@ -206,19 +206,19 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
+    // time complexity: O(n^2)
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       if (this.rows().length === 0) {
         return false;
       }
 
-      var size = this.get(0).length;
+      var size = this.get('n');
       var count = 0;
       var rowIndex = 0;
       var colIndex = minorDiagonalColumnIndexAtFirstRow;
 
       for (var i = 0; i < size; i ++) {
         rowIndex = i;
-
         while (this.get(rowIndex) !== undefined && this.get(rowIndex)[colIndex] !== undefined) {
           if (this.get(rowIndex)[colIndex] === 1) {
             count ++;
@@ -238,6 +238,7 @@
     },
 
     // test if any minor diagonals on this board contain conflicts
+    // time complexity: O(n^3)
     hasAnyMinorDiagonalConflicts: function() {
       if (this.rows().length === 0) {
         return false;
